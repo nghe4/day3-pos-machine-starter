@@ -15,6 +15,8 @@ public class PosMachine {
         if (!isBarcodeValid(barcodes)) {
             System.out.println("Invalid barcodes input");
         }
+
+        List<Item> items = ItemsLoader.loadAllItems();
         return null;
     }
 }
