@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PosMachine {
+    private static int totalPrice = 0;
+
     private static boolean isBarcodeValid(List<String> barcodes) {
         for (String barcode : barcodes) {
             if (barcode == null && barcode.trim().isEmpty())
@@ -41,6 +43,8 @@ public class PosMachine {
 
     private static String generateItemReceipt(Item item, int quantity) {
         int subtotal = item.getPrice() * quantity;
+        totalPrice += subtotal;
+
         return String.format("Name: %s, Quantity: %d, Unit price: %d (yuan), Subtotal: %d (yuan)\n",
                 item.getName(), quantity, item.getPrice(), subtotal);
     }
@@ -48,12 +52,9 @@ public class PosMachine {
     private static String generateReceipt(Map<Item, Integer> itemQuantityMap) {
         StringBuilder receipt = new StringBuilder("***<store earning no money>Receipt***\n");
 
-        int totalPrice = 0;
         for (Map.Entry<Item, Integer> entry : itemQuantityMap.entrySet()) {
             Item item = entry.getKey();
             int quantity = entry.getValue();
-            int subtotal = item.getPrice() * quantity;
-            totalPrice += subtotal;
 
             receipt.append(generateItemReceipt(item, quantity));
         }
