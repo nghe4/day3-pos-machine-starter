@@ -34,13 +34,16 @@ public class PosMachine {
         return itemQuantityMap;
     }
 
+    private static Map<Item, Integer> loadItemsByBarcodes(List<String> barcodes) {
+        List<Item> items = ItemsLoader.loadAllItems();
+        return mapItemsToQuantities(barcodes, items);
+    }
+
     public String printReceipt(List<String> barcodes) {
         if (!isBarcodeValid(barcodes)) {
             System.out.println("Invalid barcodes input");
         }
-
-        List<Item> items = ItemsLoader.loadAllItems();
-        Map<Item, Integer> itemQuantityMap = mapItemsToQuantities(barcodes, items);
+        Map<Item, Integer> itemQuantityMap = loadItemsByBarcodes(barcodes);
         return null;
     }
 }
